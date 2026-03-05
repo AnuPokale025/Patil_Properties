@@ -13,7 +13,7 @@ import NewsAndUpdate from "./home/News&Update";
 import Footer from "./Footer";
 import "../index.css";
 import SinglePostPage from "./home/SinglePostPage";
-import PropertyListingPage from "./home/PropertyListingPage";
+// import PropertyListingPage from "./home/PropertyListingPage";
 
 const Home = () => {
 
@@ -39,7 +39,7 @@ const Home = () => {
       <LocationSection />
       <RequestTour />
       <NewsAndUpdate />
-      <PropertyListingPage/>
+      {/* <PropertyListingPage/> */}
  
 
       {/* Footer */}

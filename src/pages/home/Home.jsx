@@ -17,7 +17,7 @@ const Home = () => {
     <>
       <HomeProperty />
       <FeaturesSection />
-      <PropertyListingPage />
+      {/* <PropertyListingPage /> */}
       <PropertyStats />
       <AmenitiesSection />
       <GallerySection />

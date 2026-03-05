@@ -48,7 +48,7 @@ const HeroProperty = () => {
           key={index}
           src={img}
           alt="Property"
-          className={`absolute w-full h-full object-cover transition-opacity duration-1000 brightness-110 contrast-105 ${
+          className={`absolute w-full h-full object-cover transition-opacity duration-1000 brightness-90 contrast-105 ${
             index === currentIndex ? "opacity-100" : "opacity-0"
           }`}
         />

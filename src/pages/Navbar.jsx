@@ -1,14 +1,12 @@
 import { useState, useEffect } from "react";
 import { Menu, X } from "lucide-react";
-import { Link, useNavigate } from "react-router-dom";
-import { useAuth } from "../auth/Authcontext";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 
 const Navbar = () => {
   const [mobileMenu, setMobileMenu] = useState(false);
   const [scrolled, setScrolled] = useState(false);
-
   const navigate = useNavigate();
-  const { logout, isAuthenticated } = useAuth();
+  const location = useLocation();
 
   // Detect scroll
   useEffect(() => {
@@ -19,11 +17,6 @@ const Navbar = () => {
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
-
-  // Handle Logout
-  const handleLogout = () => {
-    navigate("/logout");
-  };
 
   const navLinks = [
     { name: "Home", path: "/" },
@@ -36,15 +29,21 @@ const Navbar = () => {
     { name: "Location", path: "/location" },
   ];
 
+  const isActive = (path) => location.pathname === path;
+
   return (
     <nav
       className={`fixed top-0 w-full z-50 transition-all duration-300 ${
-        scrolled ? "bg-white shadow-md" : "bg-transparent"
+        scrolled || Object.values(navLinks).some(link => isActive(link.path))
+          ? "bg-white shadow-md shadow-b-2"
+          : "bg-transparent"
       }`}
     >
       <div
         className={`flex justify-between items-center px-4 sm:px-6 md:px-10 lg:px-16 py-4 md:py-5 transition-colors duration-300 ${
-          scrolled ? "text-black" : "text-black"
+          scrolled || Object.values(navLinks).some(link => isActive(link.path))
+            ? "text-black"
+            : "text-white"
         }`}
       >
         {/* Logo */}
@@ -61,24 +60,17 @@ const Navbar = () => {
             <Link
               key={link.path}
               to={link.path}
-              className={`pb-1 border-b-2 border-transparent transition ${
-                scrolled
-                  ? "hover:text-gray-600 hover:border-gray-600"
-                  : "hover:text-gray-300 hover:border-gray-300"
+              className={`pb-1 border-b-2 transition ${
+                isActive(link.path)
+                  ? "text-black border-black"
+                  : scrolled
+                  ? "text-gray-600 border-transparent hover:border-gray-600"
+                  : "text-gray-300 border-transparent hover:border-gray-300"
               }`}
             >
               {link.name}
             </Link>
           ))}
-
-          {isAuthenticated && (
-            <button
-              onClick={handleLogout}
-              className="text-red-500 hover:text-red-600"
-            >
-              Logout
-            </button>
-          )}
         </div>
 
         {/* Mobile Menu Button */}
@@ -95,7 +87,7 @@ const Navbar = () => {
       {/* Mobile Dropdown */}
       {mobileMenu && (
         <div
-          className={`lg:hidden flex flex-col px-4 py-4 space-y-2 transition ${
+          className={`lg:hidden flex flex-col px-4 py-4 space-y-2 transition shadow-b-2 shadow-md ${
             scrolled
               ? "bg-white text-black shadow-md"
               : "bg-black/95 text-white"
@@ -107,24 +99,16 @@ const Navbar = () => {
               to={link.path}
               onClick={() => setMobileMenu(false)}
               className={`px-4 py-3 rounded transition block ${
-                scrolled ? "hover:bg-gray-100" : "hover:bg-white/10"
+                isActive(link.path)
+                  ? "bg-white text-black font-semibold"
+                  : scrolled
+                  ? "hover:bg-gray-100"
+                  : "hover:bg-white/10"
               }`}
             >
               {link.name}
             </Link>
           ))}
-
-          {isAuthenticated && (
-            <button
-              onClick={() => {
-                handleLogout();
-                setMobileMenu(false);
-              }}
-              className="px-4 py-3 text-left text-red-500 hover:bg-red-100 rounded"
-            >
-              Logout
-            </button>
-          )}
         </div>
       )}
     </nav>

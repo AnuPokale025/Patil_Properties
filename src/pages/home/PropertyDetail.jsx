@@ -1,41 +1,54 @@
 import React, { useEffect, useState } from "react";
 import { MapPin, BedDouble, Bath, Car, Ruler, Star } from "lucide-react";
 import { useParams } from "react-router-dom";
-import { getPropertyById } from "../../api/property.api";
 
 const PropertyDetail = () => {
-  // ✅ FIXED: get correct param name
   const { id } = useParams();
+
+  // Static property data
+  const staticProperty = {
+    _id: "1",
+    title: "Luxury Modern Villa in Coral Gables",
+    price: 2500000,
+    listingType: "sale",
+    address: {
+      street: "1234 Aragon Ave",
+      city: "Coral Gables",
+      country: "Florida"
+    },
+    bedrooms: 4,
+    bathrooms: 3,
+    parking: 2,
+    area: 3560,
+    areaUnit: "sqft",
+    description: "Tastefully renovated luxury villa with stunning ocean views. This home features high-end finishes, modern appliances, and exceptional architectural design. The property is ideally situated on a private lot along a quiet street with excellent access to premier shopping and dining.",
+    images: [
+      "https://sample.realhomes.io/single-property-02/wp-content/uploads/sites/3/2021/10/slide-one-f-1.jpg",
+      "https://sample.realhomes.io/single-property-02/wp-content/uploads/sites/3/2021/10/slide-two.jpg",
+      "https://sample.realhomes.io/single-property-02/wp-content/uploads/sites/3/2021/10/Property-2.jpg",
+      "https://sample.realhomes.io/single-property-02/wp-content/uploads/sites/3/2021/10/spacejoy-c6SxfCFLNhE-unsplash-600x600.jpg"
+    ],
+    amenities: ["Swimming_Pool", "Gym", "Security_System", "Central_Air", "Hardwood_Floors"],
+    features: ["Modern_Kitchen", "Master_Suite", "Outdoor_Patio", "Marble_Bathrooms"],
+    isFeatured: true,
+    agentId: {
+      fullName: "John Smith",
+      email: "john.smith@example.com",
+      phoneNo: "+1 (305) 555-0123"
+    }
+  };
 
   const [property, setProperty] = useState(null);
   const [activeImage, setActiveImage] = useState(0);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
 
-  // ================= FETCH PROPERTY =================
   useEffect(() => {
-    const fetchProperty = async () => {
-      try {
-        setLoading(true);
-        console.log("Hii");
-        const res = await getPropertyById(id);
-
-        // console.log("Fetched Property:", res.data);
-
-        setProperty(res?.data?.data);
-      } catch (err) {
-        setError(
-          err?.response?.data?.message || "Failed to load property details"
-        );
-        console.error(err);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    if (id) {
-      fetchProperty();
-    }
+    // Simulate loading delay
+    setTimeout(() => {
+      setProperty(staticProperty);
+      setLoading(false);
+    }, 500);
   }, [id]);
 
   // ================= LOADING =================

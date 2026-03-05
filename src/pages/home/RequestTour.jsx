@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
 export default function RequestTour() {
@@ -6,6 +6,9 @@ export default function RequestTour() {
   const Tour = () => {
     navigate("/tour");
   }
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
   return (
     <section
       className="relative bg-cover bg-center py-24 px-6"
@@ -30,7 +33,7 @@ export default function RequestTour() {
         <div className="bg-white text-gray-700 rounded-2xl shadow-2xl p-8 md:p-10 text-left">
 
           <form className="space-y-8">
-            
+
             {/* Row 1 */}
             <div className="grid md:grid-cols-2 gap-8">
               <div>

@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import { getProperties } from "../../api/property.api";
 import { useNavigate } from "react-router-dom";
 
 const PropertyListingPage = () => {
@@ -9,27 +8,129 @@ const PropertyListingPage = () => {
 
   const navigate = useNavigate();
 
-  // ✅ Navigate using property ID
+  // Static properties data
+  const staticProperties = [
+    {
+      _id: "1",
+      title: "Luxury Modern Villa in Coral Gables",
+      price: 2500000,
+      listingType: "sale",
+      address: {
+        street: "1234 Aragon Ave",
+        city: "Coral Gables",
+        country: "Florida"
+      },
+      bedrooms: 4,
+      bathrooms: 3,
+      parking: 2,
+      area: 3560,
+      images: [
+        "https://sample.realhomes.io/single-property-02/wp-content/uploads/sites/3/2021/10/slide-one-f-1.jpg"
+      ]
+    },
+    {
+      _id: "2",
+      title: "Contemporary Beachfront Condo",
+      price: 1850000,
+      listingType: "sale",
+      address: {
+        street: "5678 Ocean Drive",
+        city: "Miami Beach",
+        country: "Florida"
+      },
+      bedrooms: 3,
+      bathrooms: 2,
+      parking: 1,
+      area: 2400,
+      images: [
+        "https://sample.realhomes.io/single-property-02/wp-content/uploads/sites/3/2021/10/slide-two.jpg"
+      ]
+    },
+    {
+      _id: "3",
+      title: "Elegant Waterfront Estate",
+      price: 3200000,
+      listingType: "sale",
+      address: {
+        street: "9012 Bay View Court",
+        city: "Coconut Grove",
+        country: "Florida"
+      },
+      bedrooms: 5,
+      bathrooms: 4,
+      parking: 3,
+      area: 4500,
+      images: [
+        "https://sample.realhomes.io/single-property-02/wp-content/uploads/sites/3/2021/10/Property-2.jpg"
+      ]
+    },
+    {
+      _id: "4",
+      title: "Charming Historic Home",
+      price: 1200000,
+      listingType: "sale",
+      address: {
+        street: "3456 Heritage Lane",
+        city: "Coral Gables",
+        country: "Florida"
+      },
+      bedrooms: 3,
+      bathrooms: 2,
+      parking: 2,
+      area: 2200,
+      images: [
+        "https://sample.realhomes.io/single-property-02/wp-content/uploads/sites/3/2021/10/spacejoy-c6SxfCFLNhE-unsplash-600x600.jpg"
+      ]
+    },
+    {
+      _id: "5",
+      title: "Modern Architectural Masterpiece",
+      price: 2800000,
+      listingType: "sale",
+      address: {
+        street: "7890 Modern Ave",
+        city: "Wynwood",
+        country: "Florida"
+      },
+      bedrooms: 4,
+      bathrooms: 3,
+      parking: 2,
+      area: 3800,
+      images: [
+        "https://sample.realhomes.io/single-property-02/wp-content/uploads/sites/3/2021/10/slide-one-f-1.jpg"
+      ]
+    },
+    {
+      _id: "6",
+      title: "Luxurious Penthouse Suite",
+      price: 4100000,
+      listingType: "sale",
+      address: {
+        street: "2345 Sky Tower",
+        city: "Brickell",
+        country: "Florida"
+      },
+      bedrooms: 4,
+      bathrooms: 4,
+      parking: 3,
+      area: 3600,
+      images: [
+        "https://sample.realhomes.io/single-property-02/wp-content/uploads/sites/3/2021/10/slide-two.jpg"
+      ]
+    }
+  ];
+
   const handleClick = (id) => {
     navigate(`/properties/${id}`);
   };
 
   useEffect(() => {
-    fetchProperties();
-  }, []);
-
-  const fetchProperties = async () => {
-    try {
-      setLoading(true);
-      const res = await getProperties();
-      setProperties(res.data?.data || []);
-    } catch (err) {
-      console.error(err);
-      setError("Failed to load properties");
-    } finally {
+    // Simulate loading delay
+    setTimeout(() => {
+      setProperties(staticProperties);
       setLoading(false);
-    }
-  };
+    }, 500);
+  }, []);
 
   // 🔄 Loading State
   if (loading) {

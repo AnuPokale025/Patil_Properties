@@ -1,7 +1,10 @@
-import React from "react";
+import React, { useEffect } from "react";
 
 const SinglePostPage = () => {
-  
+    useEffect(() => {
+        window.scrollTo(0, 0);
+    }, []);
+
     return (
         <div className="w-full min-h-screen bg-gray-100">
 
@@ -107,8 +110,8 @@ const SinglePostPage = () => {
                                 Continually evolve open-source systems for highly efficient
                                 deliverables. Seamlessly extend dynamic content vis-à-vis reliable
                                 meta-services.
-                            </p> 
-                            
+                            </p>
+
                             <div className="sec p-5 bg-amber-100 ">
                                 <h6>Cras justo odio, dapibus ac facilisis in, egestas eget quam. Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit. Donec sed odio dui. Maecenas faucibus mollis interdum. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.</h6>
                             </div>
