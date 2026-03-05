@@ -10,12 +10,14 @@ import LocationSection from "./LocationSection";
 import RequestTour from "./RequestTour";
 import NewsAndUpdate from "./News&Update";
 import Footer from "../Footer";
+import PropertyListingPage from "./PropertyListingPage";
 
 const Home = () => {
   return (
     <>
       <HomeProperty />
       <FeaturesSection />
+      <PropertyListingPage />
       <PropertyStats />
       <AmenitiesSection />
       <GallerySection />

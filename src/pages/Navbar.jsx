@@ -1,9 +1,14 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { Menu, X } from "lucide-react";
+import { Link, useNavigate } from "react-router-dom";
+import { useAuth } from "../auth/Authcontext";
 
 const Navbar = () => {
   const [mobileMenu, setMobileMenu] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+
+  const navigate = useNavigate();
+  const { logout, isAuthenticated } = useAuth();
 
   // Detect scroll
   useEffect(() => {
@@ -14,6 +19,11 @@ const Navbar = () => {
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
+
+  // Handle Logout
+  const handleLogout = () => {
+    navigate("/logout");
+  };
 
   const navLinks = [
     { name: "Home", path: "/" },
@@ -26,36 +36,31 @@ const Navbar = () => {
     { name: "Location", path: "/location" },
   ];
 
-  const handleNavClick = () => {
-    setMobileMenu(false);
-  };
-
   return (
     <nav
       className={`fixed top-0 w-full z-50 transition-all duration-300 ${
-        scrolled
-          ? "bg-white shadow-md"
-          : "transparent text-white"
+        scrolled ? "bg-white shadow-md" : "bg-transparent"
       }`}
     >
       <div
         className={`flex justify-between items-center px-4 sm:px-6 md:px-10 lg:px-16 py-4 md:py-5 transition-colors duration-300 ${
-          scrolled ? "text-black" : "text-white"
+          scrolled ? "text-black" : "text-black"
         }`}
       >
         {/* Logo */}
-        <div className="text-xl sm:text-2xl font-bold tracking-wide cursor-pointer">
-          <a href="/">
-            Patil <span className="font-light">Properties</span>
-          </a>
+        <div
+          onClick={() => navigate("/")}
+          className="text-xl sm:text-2xl font-bold tracking-wide cursor-pointer"
+        >
+          Patil <span className="font-light">Properties</span>
         </div>
 
         {/* Desktop Menu */}
         <div className="hidden lg:flex space-x-6 xl:space-x-8 text-sm font-medium">
           {navLinks.map((link) => (
-            <a
+            <Link
               key={link.path}
-              href={link.path}
+              to={link.path}
               className={`pb-1 border-b-2 border-transparent transition ${
                 scrolled
                   ? "hover:text-gray-600 hover:border-gray-600"
@@ -63,8 +68,17 @@ const Navbar = () => {
               }`}
             >
               {link.name}
-            </a>
+            </Link>
           ))}
+
+          {isAuthenticated && (
+            <button
+              onClick={handleLogout}
+              className="text-red-500 hover:text-red-600"
+            >
+              Logout
+            </button>
+          )}
         </div>
 
         {/* Mobile Menu Button */}
@@ -88,23 +102,33 @@ const Navbar = () => {
           }`}
         >
           {navLinks.map((link) => (
-            <a
+            <Link
               key={link.path}
-              href={link.path}
-              onClick={handleNavClick}
+              to={link.path}
+              onClick={() => setMobileMenu(false)}
               className={`px-4 py-3 rounded transition block ${
-                scrolled
-                  ? "hover:bg-gray-100"
-                  : "hover:bg-white/10"
+                scrolled ? "hover:bg-gray-100" : "hover:bg-white/10"
               }`}
             >
               {link.name}
-            </a>
+            </Link>
           ))}
+
+          {isAuthenticated && (
+            <button
+              onClick={() => {
+                handleLogout();
+                setMobileMenu(false);
+              }}
+              className="px-4 py-3 text-left text-red-500 hover:bg-red-100 rounded"
+            >
+              Logout
+            </button>
+          )}
         </div>
       )}
     </nav>
   );
 };
 
-export default Navbar; 
+export default Navbar;
